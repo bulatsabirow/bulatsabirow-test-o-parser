@@ -12,6 +12,7 @@ djangorestframework = "3.12"
 celery = "^5.4.0"
 bs4 = "^0.0.2"
 drf-yasg = "^1.21.7"
+mysqlclient = "^2.2.4"
 
 
 [tool.poetry.group.dev.dependencies]
