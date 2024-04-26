@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql-dev
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 8080:8080
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: mysql
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+
+volumes:
+  mysql_data:
