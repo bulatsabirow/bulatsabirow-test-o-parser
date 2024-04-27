@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -15,13 +17,13 @@ class BypassingAntibotChallengeChrome(webdriver.Chrome):
             """
 
     def __init__(self, *args, **kwargs):
-        kwargs.pop("options")
+        kwargs.pop("options", None)
         super().__init__(*args, **kwargs)
         self.options = Options()
         self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
         self.options.add_experimental_option("useAutomationExtension", False)
         self.options.add_argument("--disable-blink-features=AutomationControlled")
-        self.options.add_argument("--headless")
+        # self.options.add_argument("--headless")
         self.execute_cdp_cmd(
             "Page.addScriptToEvaluateOnNewDocument",
             {"source": self.BYPASS_ANTIBOT_CHALLENGE_JS_SCRIPT},
