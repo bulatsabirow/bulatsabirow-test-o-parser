@@ -1,3 +1,27 @@
 from django.shortcuts import render
+from rest_framework import mixins, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 
-# Create your views here.
+from products.models import Product
+from products.serializers import ProductSerializer, ProductsFetchSerializer
+from products.tasks import export_product_data
+
+
+class ProductAPIView(GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
+    serializer_class = ProductSerializer
+    queryset = Product.objects
+    lookup_field = "id"
+    lookup_url_kwarg = lookup_field
+
+
+class ProductsFetchAPIView(APIView):
+    serializer_class = ProductsFetchSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        export_product_data.delay(serializer.data["products_count"])
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

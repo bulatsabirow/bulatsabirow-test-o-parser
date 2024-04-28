@@ -31,22 +31,20 @@ class ProductLinksScraper(BaseScraper):
             lambda driver: len(driver.find_elements(By.CSS_SELECTOR, ".iy5 > a"))
             == self.PRODUCTS_PER_PAGE
         )
-        with self.driver:
-            self.driver.get(url)
-            # Wait until all products' cards will be loaded
-            WebDriverWait(self.driver, timeout=self.PAGE_LOADING_TIMEOUT).until(method)
-            soup = BeautifulSoup(self.driver.page_source, "lxml")
-            return soup
+        self.driver.get(url)
+        # Wait until all products' cards will be loaded
+        WebDriverWait(self.driver, timeout=self.PAGE_LOADING_TIMEOUT).until(method)
+        soup = BeautifulSoup(self.driver.page_source, "lxml")
+        return soup
 
 
 class ProductScraper(BaseScraper):
     def scrap(self, url):
-        with self.driver:
-            self.driver.get(url)
-            WebDriverWait(self.driver, timeout=self.PAGE_LOADING_TIMEOUT).until(
-                EC.presence_of_element_located(
-                    (By.CSS_SELECTOR, "#section-description > div.wk6 > h2")
-                )
+        self.driver.get(url)
+        WebDriverWait(self.driver, timeout=self.PAGE_LOADING_TIMEOUT).until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, "#section-description > div.wk6 > h2")
             )
-            soup = BeautifulSoup(self.driver.page_source, "lxml")
-            return soup
+        )
+        soup = BeautifulSoup(self.driver.page_source, "lxml")
+        return soup
