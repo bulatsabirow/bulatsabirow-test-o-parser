@@ -493,6 +493,16 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-admin-adminlte"
+version = "1.0.5"
+description = "Modern template for Django admin interface"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-admin-adminlte-1.0.5.tar.gz", hash = "sha256:c6fc1e91b7bf09a652fe4cc52d14872c4fd87a477e2181a7343d1c66d7a9f91f"},
+]
+
+[[package]]
 name = "djangorestframework"
 version = "3.12.0"
 description = "Web APIs for Django, made easy."
@@ -1920,4 +1930,4 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "d8858e4327d52bbe2d3d3b5cab6d8b5ad3c7d03a241416bc2da7cecb69f22653"
+content-hash = "a455d0021c5050edc755940348f2de46e76bc27772e0ba6eb33c0c248d3e22d8"

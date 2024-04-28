@@ -20,6 +20,7 @@ selenium-stealth = "^1.0.6"
 undetected-chromedriver = "^3.5.5"
 selenium-base = "^4.26.0"
 redis = "^5.0.4"
+django-admin-adminlte = "^1.0.5"
 
 
 [tool.poetry.group.dev.dependencies]
