@@ -16,6 +16,9 @@ mysqlclient = "^2.2.4"
 selenium = "^4.20.0"
 webdriver-manager = "^4.0.1"
 lxml = "^5.2.1"
+selenium-stealth = "^1.0.6"
+undetected-chromedriver = "^3.5.5"
+selenium-base = "^4.26.0"
 
 
 [tool.poetry.group.dev.dependencies]
