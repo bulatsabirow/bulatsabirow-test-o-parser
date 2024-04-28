@@ -10,17 +10,18 @@ from products.tasks import export_product_data
 
 
 class ProductAPIView(GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
-    serializer_class = ProductSerializer
     queryset = Product.objects
     lookup_field = "id"
     lookup_url_kwarg = lookup_field
 
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return ProductSerializer
 
-class ProductsFetchAPIView(APIView):
-    serializer_class = ProductsFetchSerializer
+        return ProductsFetchSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.get_serializer_class()(data=request.data)
         serializer.is_valid(raise_exception=True)
         export_product_data.delay(serializer.data["products_count"])
 
