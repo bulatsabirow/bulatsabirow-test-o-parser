@@ -131,3 +131,9 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Celery settings
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/0")
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    "is_secure": os.environ.get("CELERY_BROKER_IS_SECURE", "false").lower() == "true"
+}
