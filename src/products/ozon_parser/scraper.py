@@ -1,15 +1,9 @@
-import os
-import time
-import random
-
 from bs4 import BeautifulSoup
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from seleniumbase import Driver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class BaseScraper:
@@ -46,7 +40,6 @@ class ProductScraper(BaseScraper):
     def scrap(self, url):
         with self.driver:
             self.driver.get(url)
-            print(f"{url} started!")
             try:
                 WebDriverWait(self.driver, timeout=self.PAGE_LOADING_TIMEOUT).until(
                     EC.all_of(
