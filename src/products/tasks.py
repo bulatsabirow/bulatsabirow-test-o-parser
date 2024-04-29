@@ -14,12 +14,8 @@ from users.models import User
 
 @app.task
 def export_product_data(chat_id: int, products_count: int):
-    print(products_count)
     ozon_parser = OzonParser(products_count)
-    raw_data = ozon_parser.parse()
-    products_data = [
-        Product(**ProductSerializer(product_data).data) for product_data in raw_data
-    ]
+    products_data = ozon_parser.parse()
     with transaction.atomic():
         Product.objects.all().delete()
         Product.objects.bulk_create(products_data)

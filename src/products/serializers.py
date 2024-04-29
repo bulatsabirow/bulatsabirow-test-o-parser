@@ -12,4 +12,4 @@ class ProductsFetchSerializer(serializers.Serializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = "__all__"
+        excluded = ("url",)

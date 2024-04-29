@@ -10,3 +10,8 @@ def start(message):
         message,
         f"Hello {message.chat.first_name}!\n" f"Your chat_id is {message.chat.id}",
     )
+
+
+@bot.message_handler(commands=["Список товаров"])
+def send_product_list(message):
+    bot.reply_to(message, message.text)

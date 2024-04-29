@@ -9,6 +9,7 @@ from urllib.parse import urlencode
 
 from urllib3.exceptions import MaxRetryError
 
+from products.models import Product
 from products.ozon_parser.scraper import ProductLinksScraper, ProductScraper
 
 
@@ -17,12 +18,6 @@ class OzonProductParser:
         self.product_scraper = ProductScraper()
 
     def clean_data(self, data):
-        price = re.search(r"(?P<price>.+)(?=\u2009₽)", data["price"]).group("price")
-        price = price.replace("\u2009", "")
-        data["price"] = price
-        data["discount"] = re.search(
-            r"(?<=−)(?P<discount>\d+)(?=%)", data["discount"]
-        ).group("discount")
         return data
 
     def parse(self, url):
@@ -39,10 +34,11 @@ class OzonProductParser:
         image_url = response.select_one(".j8v.vj8 > .v8j.jv9.b900-a").get("src")
         name = response.find("h1", {"class": "yl tsHeadline550Medium"}).get_text()
         # TODO relocate to model field
-        return self.clean_data(
-            {
+        return Product(
+            **{
                 "name": name,
                 "description": description,
+                "url": url,
                 "image_url": image_url,
                 "price": price,
                 "discount": discount,
@@ -87,6 +83,7 @@ class OzonParser:
 
 
 if __name__ == "__main__":
+    # TODO unused code
     links = [
         "https://www.ozon.ru/product/ersh-dlya-unitaza-ersh-ersh-dlya-unitaza-napolnyy-ershiki-dlya-unitaza-ershik-dlya-unitaza-147121868/?_bctx=CAQQAQ&asb=dZPm66ygHftDZvfDQb2cnw7XKUFahLt3XfWW%252FWNhCrI%253D&asb2=jbyMknRmp0pz3mKFCuOiqvZDngryVogMVXB7hVYu1d-eeZq6WW54VWrjVgX1vIjw&avtc=1&avte=4&avts=1714375616&hs=1",
         "https://www.ozon.ru/product/pompa-dlya-vody-pompa-pompa-dlya-vody-mehanicheskaya-proffi-759379209/?_bctx=CAQQAQ&asb=RvnAwf%252Bwn5QipHtVelNgn%252BjCSl78a6qgTrf0hl4Sih0%253D&asb2=-s2HPwVxL46nH1JTQFBJbGKD9HZcYiOw55NCnAmKqOMwlt48G63QNjQa-_Y8PonpNGD70tTm4dyiOtewwSTTTg&avtc=1&avte=2&avts=1714375616&hs=1",
