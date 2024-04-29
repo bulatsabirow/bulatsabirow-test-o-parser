@@ -10,4 +10,4 @@ class ProductsFetchSerializer(serializers.Serializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        excluded = ("url",)
+        exclude = ("url",)
