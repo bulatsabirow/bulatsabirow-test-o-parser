@@ -2,9 +2,12 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from products.fields import RegexpIntegerField
+from products.querysets import ProductQuerySet
 
 
 class Product(models.Model):
+    objects = ProductQuerySet.as_manager()
+
     name = models.CharField(max_length=1024)
     description = models.TextField()
     price = RegexpIntegerField(group="price", regexp=r"(?P<price>.+)(?=\u2009₽)")

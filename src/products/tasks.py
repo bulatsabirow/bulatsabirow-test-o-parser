@@ -4,7 +4,7 @@ import requests
 from django.conf import settings
 from django.db import transaction
 
-from products.bot.bot import bot
+from products.telegram.bot import bot
 from products.models import Product
 from products.ozon_parser.parser import OzonParser
 from products.serializers import ProductSerializer
